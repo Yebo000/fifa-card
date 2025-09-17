@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Team Player Cards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .card-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-bar {
+            height: 4px;
+            border-radius: 2px;
+            transition: width 0.8s ease-out;
+        }
+        
+        .rating-circle {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+        }
+        
+        .position-badge {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .fade-in-delay-1 { animation-delay: 0.2s; }
+        .fade-in-delay-2 { animation-delay: 0.4s; }
+        .fade-in-delay-3 { animation-delay: 0.6s; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        .star-card-animated {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .star-card-animated::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255, 255, 255, 0.1) 50%, 
+                transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+            z-index: 1;
+        }
+        
+        .star-card-animated::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(251, 191, 36, 0.9) 0%, 
+                rgba(245, 158, 11, 0.9) 25%,
+                rgba(217, 119, 6, 0.9) 50%,
+                rgba(245, 158, 11, 0.9) 75%,
+                rgba(251, 191, 36, 0.9) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 4s ease infinite;
+            z-index: 0;
+        }
+        
+        .star-card-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 min-h-screen py-8">
+    <div class="max-w-7xl mx-auto px-6">
+        <!-- Header -->
+        <div class="text-center mb-12 fade-in">
+            <h1 class="text-5xl font-bold text-white mb-4">⚽ Team Squad</h1>
+            <p class="text-xl text-blue-200">Elite Player Statistics & Ratings</p>
+        </div>
+        
+        <!-- Player Cards Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Player 1: Yebo - Special Starred Card -->
+            <div class="card-hover rounded-2xl p-6 text-white fade-in glow-effect star-card-animated" style="box-shadow: 0 0 40px rgba(251, 191, 36, 0.8);">
+                
+                <!-- Star Effects -->
+                <div class="absolute top-2 left-2 text-yellow-300 text-2xl animate-pulse star-card-content">⭐</div>
+                <div class="absolute top-4 right-4 text-yellow-300 text-lg animate-pulse star-card-content" style="animation-delay: 0.5s;">✨</div>
+                <div class="absolute bottom-4 left-4 text-yellow-300 text-xl animate-pulse star-card-content" style="animation-delay: 1s;">⭐</div>
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16 star-card-content"></div>
+                
+                <!-- Player Header -->
+                <div class="relative z-10 text-center mb-6 star-card-content">
+                    <div class="w-20 h-20 rounded-full mx-auto mb-4 overflow-hidden border-4 border-yellow-300 shadow-lg shadow-yellow-400/50">
+                        <img src="https://cdn.sofifa.net/players/020/801/25_120.png" alt="Ronaldo" class="w-full h-full object-cover" onerror="this.src=''; this.alt='Photo failed to load'; this.style.display='none';">
+                    </div>
+                    <div class="flex justify-center items-center gap-2 mb-2">
+                        <span class="text-yellow-300 text-lg">⭐</span>
+                        <h3 class="text-2xl font-bold">Yebo</h3>
+                        <span class="text-yellow-300 text-lg">⭐</span>
+                    </div>
+                    <div class="flex justify-center items-center gap-3 mb-3">
+                        <span class="position-badge text-white px-3 py-1 rounded-full text-sm font-bold">CF</span>
+                        <div class="rating-circle w-12 h-12 rounded-full flex items-center justify-center border-2 border-yellow-300">
+                            <span class="text-white font-black text-lg">91</span>
+                        </div>
+                    </div>
+                    <p class="text-yellow-200 text-sm font-semibold">⭐ STAR PLAYER ⭐</p>
+                    <p class="text-blue-100 text-xs">Angwan Rama LaLiga</p>
+                </div>
+                
+                <!-- Top Row Stats -->
+                <div class="grid grid-cols-4 gap-3 mb-4 star-card-content">
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">95</div>
+                        <div class="text-xs text-blue-100 mb-1">SPD</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">92</div>
+                        <div class="text-xs text-blue-100 mb-1">ACC</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 92%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">89</div>
+                        <div class="text-xs text-blue-100 mb-1">STA</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 89%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">95</div>
+                        <div class="text-xs text-blue-100 mb-1">STR</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Row Stats -->
+                <div class="grid grid-cols-4 gap-3 star-card-content">
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">83</div>
+                        <div class="text-xs text-blue-100 mb-1">BC</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 83%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">87</div>
+                        <div class="text-xs text-blue-100 mb-1">PAS</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 87%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">85</div>
+                        <div class="text-xs text-blue-100 mb-1">TAC</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">93</div>
+                        <div class="text-xs text-blue-100 mb-1">SHT</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 93%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Player 2: Success -->
+            <div class="card-hover rounded-2xl p-6 text-white relative overflow-hidden fade-in fade-in-delay-1 glow-effect" style="background: linear-gradient(135deg, #6b7280 0%, #4b5563 50%, #374151 100%); box-shadow: 0 0 30px rgba(107, 114, 128, 0.6);">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
+                
+                <!-- Player Header -->
+                <div class="relative z-10 text-center mb-6 star-card-content">
+                    <div class="w-20 h-20 rounded-full mx-auto mb-4 overflow-hidden border-3 border-white/30">
+                        <img src="https://cdn.sofifa.net/players/203/376/25_120.png" alt="Van Dijk" class="w-full h-full object-cover" onerror="this.src=''; this.alt='Photo failed to load'; this.style.display='none';">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-1">Success</h3>
+                    <div class="flex justify-center items-center gap-3 mb-3">
+                        <span class="position-badge text-white px-3 py-1 rounded-full text-sm font-bold">CB</span>
+                        <div class="rating-circle w-12 h-12 rounded-full flex items-center justify-center">
+                            <span class="text-white font-black text-lg">79</span>
+                        </div>
+                    </div>
+                    <p class="text-blue-100 text-sm">Angwan Rama LaLiga</p>
+                </div>
+                
+                <!-- Top Row Stats -->
+                <div class="grid grid-cols-4 gap-3 mb-4 star-card-content">
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">55</div>
+                        <div class="text-xs text-blue-100 mb-1">SPD</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 55%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">60</div>
+                        <div class="text-xs text-blue-100 mb-1">ACC</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">84</div>
+                        <div class="text-xs text-blue-100 mb-1">STA</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 84%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">96</div>
+                        <div class="text-xs text-blue-100 mb-1">STR</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 96%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Row Stats -->
+                <div class="grid grid-cols-4 gap-3 star-card-content">
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">60</div>
+                        <div class="text-xs text-blue-100 mb-1">BC</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">70</div>
+                        <div class="text-xs text-blue-100 mb-1">PAS</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">80</div>
+                        <div class="text-xs text-blue-100 mb-1">TAC</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">64</div>
+                        <div class="text-xs text-blue-100 mb-1">SHT</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 64%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Player 3: Kevin De Bruyne -->
+            <div class="card-hover rounded-2xl p-6 text-white relative overflow-hidden fade-in fade-in-delay-2 glow-effect" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%); box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
+                
+                <!-- Player Header -->
+                <div class="relative z-10 text-center mb-6 star-card-content">
+                    <div class="w-20 h-20 rounded-full mx-auto mb-4 overflow-hidden border-3 border-white/30">
+                        <img src="https://cdn.sofifa.net/players/238/794/25_120.png" alt="Vinicius Jr" class="w-full h-full object-cover" onerror="this.src=''; this.alt='Photo failed to load'; this.style.display='none';">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-1">Mana</h3>
+                    <div class="flex justify-center items-center gap-3 mb-3">
+                        <span class="position-badge text-white px-3 py-1 rounded-full text-sm font-bold">LW</span>
+                        <div class="rating-circle w-12 h-12 rounded-full flex items-center justify-center">
+                            <span class="text-white font-black text-lg">88</span>
+                        </div>
+                    </div>
+                    <p class="text-blue-100 text-sm">Angwan Rama LaLiga</p>
+                </div>
+                
+                <!-- Top Row Stats -->
+                <div class="grid grid-cols-4 gap-3 mb-4 star-card-content">
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">88</div>
+                        <div class="text-xs text-blue-100 mb-1">SPD</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">90</div>
+                        <div class="text-xs text-blue-100 mb-1">ACC</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">80</div>
+                        <div class="text-xs text-blue-100 mb-1">STA</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">61</div>
+                        <div class="text-xs text-blue-100 mb-1">STR</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 61%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Row Stats -->
+                <div class="grid grid-cols-4 gap-3 star-card-content">
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">81</div>
+                        <div class="text-xs text-blue-100 mb-1">BC</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 81%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">80</div>
+                        <div class="text-xs text-blue-100 mb-1">PAS</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">50</div>
+                        <div class="text-xs text-blue-100 mb-1">TAC</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 50%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">87</div>
+                        <div class="text-xs text-blue-100 mb-1">SHT</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 87%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Player 4: Gallahad -->
+            <div class="card-hover rounded-2xl p-6 text-white relative overflow-hidden fade-in fade-in-delay-3 glow-effect" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%); box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
+                
+                <!-- Player Header -->
+                <div class="relative z-10 text-center mb-6 star-card-content">
+                    <div class="w-20 h-20 rounded-full mx-auto mb-4 overflow-hidden border-3 border-white/30">
+                        <img src="https://cdn.sofifa.net/players/252/371/25_120.png" alt="Bellingham" class="w-full h-full object-cover" onerror="this.src=''; this.alt='Photo failed to load'; this.style.display='none';">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-1">Gallahad</h3>
+                    <div class="flex justify-center items-center gap-3 mb-3">
+                        <span class="position-badge text-white px-3 py-1 rounded-full text-sm font-bold">AM</span>
+                        <div class="rating-circle w-12 h-12 rounded-full flex items-center justify-center">
+                            <span class="text-white font-black text-lg">89</span>
+                        </div>
+                    </div>
+                    <p class="text-blue-100 text-sm">Angwan Rama LaLiga</p>
+                </div>
+                
+                <!-- Top Row Stats -->
+                <div class="grid grid-cols-4 gap-3 mb-4 star-card-content">
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">90</div>
+                        <div class="text-xs text-blue-100 mb-1">SPD</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">71</div>
+                        <div class="text-xs text-blue-100 mb-1">ACC</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 71%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">80</div>
+                        <div class="text-xs text-blue-100 mb-1">STA</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-yellow-300">93</div>
+                        <div class="text-xs text-blue-100 mb-1">STR</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 93%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Row Stats -->
+                <div class="grid grid-cols-4 gap-3 star-card-content">
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">88</div>
+                        <div class="text-xs text-blue-100 mb-1">BC</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">94</div>
+                        <div class="text-xs text-blue-100 mb-1">PAS</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 94%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">88</div>
+                        <div class="text-xs text-blue-100 mb-1">TAC</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-green-300">79</div>
+                        <div class="text-xs text-blue-100 mb-1">SHT</div>
+                        <div class="bg-gray-700 rounded-full h-1">
+                            <div class="stat-bar bg-gradient-to-r from-green-400 to-emerald-500" style="width: 79%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Legend -->
+        <div class="mt-12 bg-white/10 backdrop-blur-md rounded-2xl p-6 fade-in">
+            <h3 class="text-2xl font-bold text-white mb-6 text-center">📊 Stats Legend</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-semibold text-yellow-300 mb-3">Physical Attributes</h4>
+                    <div class="space-y-2 text-blue-100">
+                        <div class="flex justify-between">
+                            <span>SPD - Speed</span>
+                            <span>How fast the player runs</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>ACC - Acceleration</span>
+                            <span>How quickly they reach top speed</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>STA - Stamina</span>
+                            <span>Endurance throughout the match</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>STR - Strength</span>
+                            <span>Physical power and body strength</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-green-300 mb-3">Technical Skills</h4>
+                    <div class="space-y-2 text-blue-100">
+                        <div class="flex justify-between">
+                            <span>BC - Ball Control</span>
+                            <span>Ability to control the ball</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>PAS - Passing</span>
+                            <span>Accuracy and vision in passing</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>TAC - Tackle</span>
+                            <span>Defensive tackling ability</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>SHT - Shot</span>
+                            <span>Shooting power and accuracy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animate stat bars when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const statBars = document.querySelectorAll('.stat-bar');
+                statBars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+            }, 500);
+        });
+
+        // Add click interaction to cards
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.addEventListener('click', function() {
+                const playerName = this.querySelector('h3').textContent;
+                const rating = this.querySelector('.rating-circle span').textContent;
+                alert(`⚽ ${playerName} - Overall Rating: ${rating}\n\nClick to view detailed player statistics!`);
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98042fc7f0480038',t:'MTc1ODA2NTc5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+
+
+
